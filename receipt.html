@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ticket Receipt</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Montserrat", sans-serif;
+            background: url('cinemabg.jpg');
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-size: max(1400px, 100vw);
+        }
+
+        #cursor {
+            height: 15px;
+            width: 15px;
+            background-color: red;
+            border-radius: 50%;
+            position: fixed;
+            z-index: 99;
+            transition: all linear 0.13s;
+        }
+
+        #cursor-blur {
+            height: 400px;
+            width: 400px;
+            background-color: #cf1e1e57;
+            border-radius: 50%;
+            position: fixed;
+            filter: blur(70px);
+            z-index: 9;
+            transition: all linear 0.4s;
+        }
+
+        body::-webkit-scrollbar {
+            background-color: rgb(46, 0, 0);
+            display: block;
+            width: 10px;
+        }
+
+        body::-webkit-scrollbar-thumb {
+            border-radius: 50px;
+            background: linear-gradient(red, rgb(84, 8, 8));
+        }
+
+        *::selection {
+            color: red;
+            background-color: white;
+        }
+
+        .mainbox {
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .logo {
+            height: 90px;
+        }
+
+        .contentbox {
+            border: 3px solid black;
+            padding: 20px;
+            width: 500px;
+            background-color: white;
+            box-shadow: 10px 15px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin-top: 26px;
+            height: 85vh;
+            position: relative;
+            z-index: 11;
+            animation: cardanim 4s ease-in-out 0s 1;
+        }
+        @keyframes cardanim {
+            from {
+                transform: rotate3d(1, 0, 0.4, -2000deg);
+                opacity: 0;
+            }
+
+            to {
+                transform: rotate3d(1, 0, 0.4, 0deg);
+                opacity: 1;
+            }
+        }
+        .conto {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            margin-left: 30px;
+            margin-top: 11px;
+            margin-bottom: 11px;
+        }
+
+        .msg {
+            margin-top: 22px;
+        }
+
+        .Order {
+            text-align: center;
+            text-decoration: underline;
+        }
+
+        h4,
+        p {
+            margin: 0;
+        }
+
+        .msgcont {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        p {
+            margin-left: 0px;
+        }
+
+        .payementtypeofuser {
+            margin-left: 48px;
+        }
+
+        .noofticket {
+            margin-left: 91px;
+        }
+
+        .timeuser {
+            margin-left: 161px;
+        }
+
+        .addressofuser {
+            margin-left: 161px;
+        }
+
+        .cartofuser {
+            margin-left: 141px;
+        }
+
+        .billofuser {
+            margin-left: 108px;
+        }
+
+        .phoneofuser {
+            margin-left: 71px;
+        }
+
+        .emailofuser {
+            margin-left: 152px;
+        }
+
+        .nameofuser {
+            margin-left: 114px;
+        }
+
+        svg {
+            margin-left: 58px;
+            transition: all ease-in-out 0.4s;
+        }
+
+        .head {
+            display: flex;
+            gap: 51px;
+        }
+
+        svg:hover {
+            cursor: pointer;
+            color: red;
+        }
+
+        .heading {
+            font-weight: 900;
+            -webkit-text-stroke: 1px red;
+            text-decoration: underline;
+        }
+
+        hr {
+            margin: 0px;
+        }
+    </style>
+</head>
+<body>
+    <div id="cursor"></div>
+    <div id="cursor-blur"></div>
+    <div class="mainbox">
+        <form>
+            <div class="contentbox">
+                <div class="head">
+                    <img class="logo ancr" src="logo-dark.png" alt="">
+                    <h1 class="heading">THE ARENA</h1>
+                    <svg id="close-button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="30" height="30" color="#000000" fill="none">
+                        <path d="M18 6L12 12M12 12L6 18M12 12L18 18M12 12L6 6" stroke="currentColor" stroke-width="1.5"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </div>
+                <h3 class="Order">Ticket Receipt</h3>
+                <hr>
+                <div class="conto">
+                    <h4>Full Name : </h4>
+                    <p class="nameofuser"></p>
+                </div>
+                <hr>
+                <div class="conto">
+                    <h4>Email : </h4>
+                    <p class="emailofuser"></p>
+                </div>
+                <hr>
+                <div class="conto">
+                    <h4>Phone Number : </h4>
+                    <p class="phoneofuser"></p>
+                </div>
+                <hr>
+                <div class="conto">
+                    <h4>Movie Title : </h4>
+                    <p class="billofuser"></p>
+                </div>
+                <hr>
+                <div class="conto">
+                    <h4>Branch : </h4>
+                    <p class="cartofuser"></p>
+                </div>
+                <hr>
+                <div class="conto">
+                    <h4>Date : </h4>
+                    <p class="addressofuser"></p>
+                </div>
+                <hr>
+                <div class="conto">
+                    <h4>Time : </h4>
+                    <p class="timeuser"></p>
+                </div>
+                <hr>
+                <div class="conto">
+                    <h4>No. Of Tickets : </h4>
+                    <p class="noofticket"></p>
+                </div>
+                <hr>
+                <div class="conto">
+                    <h4>Seat Numbers Allocated : </h4>
+                    <p class="seatofuser"></p>
+                </div>
+                <hr>
+                <div class="conto">
+                    <h4>Total Amount Paid : </h4>
+                    <p class="payementtypeofuser"></p>
+                </div>
+                <hr>
+                <div class="msgcont">
+                    <div class="msg">Thank you for choosing "The Arena"! Enjoy the show!</div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script>
+        var crsr = document.querySelector("#cursor");
+        var crsrblr = document.querySelector("#cursor-blur");
+        document.addEventListener("mousemove", (dets) => {
+            crsr.style.left = dets.x + 3 + "px";
+            crsr.style.top = dets.y + 7 + "px";
+            crsrblr.style.left = dets.x - 200 + "px";
+            crsrblr.style.top = dets.y - 200 + "px";
+        })
+        class TicketReceipt {
+            constructor() {
+                this.fullname = document.querySelector(".nameofuser");
+                this.email = document.querySelector(".emailofuser");
+                this.phone = document.querySelector(".phoneofuser");
+                this.movie = document.querySelector(".billofuser");
+                this.branch = document.querySelector(".cartofuser");
+                this.date = document.querySelector(".addressofuser");
+                this.time = document.querySelector(".timeuser");
+                this.tickets = document.querySelector(".noofticket");
+                this.seats = document.querySelector(".seatofuser");
+                this.amount = document.querySelector(".payementtypeofuser");
+                this.cursor = document.querySelector("#cursor");
+                this.cursorBlur = document.querySelector("#cursor-blur");
+                this.closeButton = document.querySelector("#close-button");
+
+                this.TICKET_PRICE = 1000; // Constant for ticket price
+            }
+
+            initialize() {
+                this.populateReceipt();
+                this.addCloseEvent();
+            }
+
+            getUserData() {
+                return JSON.parse(localStorage.getItem("userInfo")) || [];
+            }
+
+            getBookingData() {
+                return JSON.parse(localStorage.getItem("userBooking")) || [];
+            }
+
+            populateReceipt() {
+                const userData = this.getUserData();
+                const bookingData = this.getBookingData();
+
+                if (userData.length > 0 && bookingData.length > 0) {
+                    const lastUser = userData[userData.length - 1];
+                    const lastBooking = bookingData[bookingData.length - 1];
+
+                    this.fullname.innerHTML = lastUser._fullname || "N/A";
+                    this.email.innerHTML = lastUser._email || "N/A";
+                    this.phone.innerHTML = lastUser._phone || "N/A";
+                    this.movie.innerHTML = lastBooking.movie || "N/A";
+                    this.branch.innerHTML = lastBooking.branch || "N/A";
+                    this.date.innerHTML = lastBooking.date || "N/A";
+                    this.time.innerHTML = lastBooking.time || "N/A";
+                    this.tickets.innerHTML = lastBooking.tickets || 0;
+
+                    const ticketCount = lastBooking.tickets || 0;
+                    this.amount.innerHTML = `${ticketCount * this.TICKET_PRICE}/-`;
+
+                    // Generate and display seat numbers
+                    const seats = this.generateSeatNumbers(ticketCount);
+                    this.seats.innerHTML = seats.join(", ");
+                } else {
+                    this.displayError();
+                }
+            }
+
+            generateSeatNumbers(ticketCount) {
+                const seats = [];
+                let seatNumber = 25; // Starting seat number
+                for (let i = 0; i < ticketCount; i++) {
+                    seats.push(seatNumber++);
+                }
+                return seats;
+            }
+
+            displayError() {
+                this.fullname.innerHTML = "No user data available";
+                this.email.innerHTML = "No data";
+                this.phone.innerHTML = "No data";
+                this.movie.innerHTML = "No booking data";
+                this.branch.innerHTML = "No data";
+                this.date.innerHTML = "No data";
+                this.time.innerHTML = "No data";
+                this.tickets.innerHTML = "0";
+                this.seats.innerHTML = "N/A";
+                this.amount.innerHTML = "0/-";
+                console.error("Missing or incomplete data in localStorage.");
+            }
+
+            addCloseEvent() {
+                this.closeButton.addEventListener("click", () => {
+                    if (confirm("Are you sure you want to return to the main page?")) {
+                        location.href = "mainpage.html";
+                    }
+                });
+            }
+        }
+
+        // Initialize the TicketReceipt class
+        const ticketReceipt = new TicketReceipt();
+        ticketReceipt.initialize();
+    </script>
+</body>
+</html>

@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+        <style>
+            body {
+            margin: 0;
+            padding: 0;
+            font-family: "Montserrat", sans-serif;
+            background-color: black;
+            color: white;
+        }
+
+        #cursor {
+            height: 15px;
+            width: 15px;
+            background-color: red;
+            border-radius: 50%;
+            position: fixed;
+            z-index: 99;
+            transition: all linear 0.13s;
+        }
+
+        #cursor-blur {
+            height: 400px;
+            width: 400px;
+            background-color: #cf1e1e57;
+            border-radius: 50%;
+            position: fixed;
+            filter: blur(70px);
+            z-index: 9;
+            transition: all linear 0.4s;
+        }
+
+        body::-webkit-scrollbar {
+            background-color: rgb(46, 0, 0);
+            display: block;
+            width: 10px;
+        }
+        body::-webkit-scrollbar-thumb {
+            border-radius: 50px;
+            background: linear-gradient(red, rgb(84, 8, 8));
+        }
+        *::selection {
+            color: red;
+            background-color: white;
+        }
+        .logo {
+            height: 130px;
+            width: 160px;
+            margin-left: 30px;
+            margin-top: 20px;
+            filter: drop-shadow(0px 7px 20px red);
+            position: relative;
+            z-index: 11;
+        }
+        .showinghead {
+            font-size: 2.8rem;
+            margin: 0;
+            font-weight: 900;
+            text-shadow:
+                0 0 10px red,
+                0 0 20px red,
+                0 0 40px red,
+                0 0 80px red;
+        }
+        .showheadline {
+            bottom: 0;
+            width: 100%;
+            height: 4px;
+            background-color: red;
+        }
+        .showheadcont {
+            position: absolute;
+            z-index: 11;
+            width: 1050px;
+            margin: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            top: 90px;
+            left: 260px;
+        }
+        .navbtn {
+            height: 45px;
+            width: 150px;
+            border-radius: 50px;
+            color: white;
+            border: 3px solid rgb(100, 0, 0);
+            font-size: 1.1rem;
+            background: linear-gradient(to left bottom, red, rgb(84, 8, 8));
+            transition: all ease-in-out 0.3s;
+            position: relative;
+            z-index: 11;
+            font-family: "Montserrat", sans-serif;
+        }
+
+        .navbtn:hover {
+            font-size: 1rem;
+            background: linear-gradient(to left bottom, rgb(84, 8, 8), red);
+            cursor: pointer;
+        }
+        .logbtn{
+            position: absolute;
+            top: 40px;
+            right: 30px;
+            font-family: "Montserrat", sans-serif;
+        }
+        .container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 11;
+  width: 90%;
+  margin: auto;
+}
+main {
+  width: 100%;
+  padding: 40px;
+  padding-top: 15px;
+}
+
+.admin-section {
+  margin-bottom: 30px;
+}
+
+form label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+form input{
+  display: block;
+  margin: 5px 0;
+  padding: 10px;
+  outline: none;
+    border: 3px solid red;
+    background-color: rgba(195, 21, 21, 0.455);
+    color: white;
+    font-size: 0.93rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table th, table td {
+  border: 2px solid rgba(195, 21, 21, 0.455);
+  padding: 10px;
+  text-align: center;
+  /* background-color: black; */
+}
+
+table th {
+  /* background-color: black; */
+  color: red;
+}
+.form1, .form2{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+}
+#manage-movies h2,h3{
+    color: red;
+}
+.smallbtn{
+    background: linear-gradient(to left bottom, red, rgb(84, 8, 8));
+    color: white;
+    outline: none;
+    font-family: "Montserrat", sans-serif;
+}
+.smallbtn:hover{
+    background: linear-gradient(to left bottom,  rgb(84, 8, 8),red);
+    cursor: pointer;
+}
+.labal{
+  position: absolute;
+  z-index: 11;
+  top: 15px;
+  right: 50px;
+  display: flex;
+  gap: 6px;
+}
+.lab{
+  color: red;
+  font-weight: 700;
+}
+</style>
+</head>
+<body>
+    <img class="logo ancr" src="logo-dark.png" alt="">
+    <!-- <div class="labal">
+      <div class="sen">Logged in as</div>
+      <div class="lab"></div>
+    </div> -->
+    <button onclick="location.href='adminlogin.html'" class="navbtn logbtn">Log out</button>
+    <div id="cursor"></div>
+    <div id="cursor-blur"></div>
+    <div class="showheadcont">
+        <h1 class="showinghead">THE ARENA MANAGEMENT - ADMIN PANEL</h1>
+        <div class="showheadline"></div>
+    </div>
+    <div class="container">     
+        <main>
+          <section id="manage-movies" class="admin-section">
+            <h2>MANAGE MOVIES</h2>
+            <form id="movie-form">
+              <div class="form1">
+              <input type="hidden" id="movie-id">
+              
+              <label>Movie Title:</label>
+              <input type="text" id="movie-title" required>
+              
+              <label>Date 1:</label>
+              <input type="date" id="movie-date-1" required>
+              
+              <label>Date 2:</label>
+              <input type="date" id="movie-date-2" required>
+              
+              <label>Date 3:</label>
+              <input type="date" id="movie-date-3" required>
+              
+            </div>
+            <div class="form2" style="margin-top: 10px;">
+              <label>Time 1:</label>
+              <input type="time" id="movie-time-1" required>
+              
+              <label>Time 2:</label>
+              <input type="time" id="movie-time-2" required>
+              <label>DHA Branch Seats:</label>
+              <input type="number" id="dha-seats" min="1" required>
+              
+              <label>Askari-IV Branch Seats:</label>
+              <input type="number" id="askari-seats" min="1" required>
+            </div>
+              <button class="navbtn" type="submit" style="margin-top: 10px;margin-left: 540px;">Save</button>
+            </form>            
+              <h3>MOVIE LIST</h3>
+              <table id="movies-table">
+                <thead>
+                  <tr>
+                    <th>Title</th>
+                    <th>Show Dates</th>
+                    <th>Show Times</th>
+                    <th>Branches & Seats</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Movies will be listed here -->
+                </tbody>
+              </table>              
+          </section>
+        </main>
+      </div>
+    <script>
+      // The whole part written below is to design a cursor.
+      var crsr = document.querySelector("#cursor");
+        var crsrblr = document.querySelector("#cursor-blur");
+        document.addEventListener("mousemove", (dets) => {
+            crsr.style.left = dets.x + 3 + "px";
+            crsr.style.top = dets.y + 7 + "px";
+            crsrblr.style.left = dets.x - 200 + "px";
+            crsrblr.style.top = dets.y - 200 + "px";
+        });
+  class Movie {  
+    constructor(id, title, dates, times, branches) {
+      this.id = id || Date.now();
+      this.title = title;
+      this.dates = dates;
+      this.times = times;
+      this.branches = branches;
+    }
+  }
+
+  class MovieManager {
+    constructor() {
+      this.movies = this.loadMoviesFromLocalStorage();
+      this.initializeUI();
+    }
+
+    loadMoviesFromLocalStorage() {
+      const movies = JSON.parse(localStorage.getItem("movies")) || [];
+      return movies.map(
+        (m) => new Movie(m.id, m.title, m.dates, m.times, m.branches)
+      );
+    }
+
+    saveMoviesToLocalStorage() {
+      localStorage.setItem("movies", JSON.stringify(this.movies));
+    }
+
+    saveMovie(movie) {
+      const existingIndex = this.movies.findIndex((m) => m.id === movie.id);
+      if (existingIndex !== -1) {
+        this.movies[existingIndex] = movie;
+      } else {
+        this.movies.push(movie);
+      }
+      this.saveMoviesToLocalStorage();
+      this.updateMoviesTable();
+    }
+
+    deleteMovie(movieId) {
+      if (confirm("Are you sure you want to delete this movie?")) {
+        this.movies = this.movies.filter((movie) => movie.id !== movieId);
+        this.saveMoviesToLocalStorage();
+        this.updateMoviesTable();
+      }
+    }
+
+    editMovie(movieId) {
+      const movie = this.movies.find((m) => m.id === movieId);
+      if (movie) {
+        document.getElementById("movie-id").value = movie.id;
+        document.getElementById("movie-title").value = movie.title;
+        document.getElementById("movie-date-1").value = movie.dates[0];
+        document.getElementById("movie-date-2").value = movie.dates[1];
+        document.getElementById("movie-date-3").value = movie.dates[2];
+        document.getElementById("movie-time-1").value = movie.times[0];
+        document.getElementById("movie-time-2").value = movie.times[1];
+
+        document.getElementById("dha-seats").value = movie.branches["DHA Branch"];
+        document.getElementById("askari-seats").value = movie.branches["Askari-IV Branch"];
+      }
+    }
+
+    updateMoviesTable() {
+      const tbody = document
+        .getElementById("movies-table")
+        .querySelector("tbody");
+      tbody.innerHTML = "";
+      this.movies.forEach((movie) => {
+        const branches = Object.entries(movie.branches)
+          .map(([branch, seats]) => `${branch}: ${seats} seats`)
+          .join("<br>");
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${movie.title}</td>
+          <td>${movie.dates.join(", ")}</td>
+          <td>${movie.times.join(", ")}</td>
+          <td>${branches}</td>
+          <td>
+            <button class="smallbtn" onclick="movieManager.editMovie(${movie.id})">Edit</button>
+            <button class="smallbtn" onclick="movieManager.deleteMovie(${movie.id})">Delete</button>
+          </td>
+        `;
+        tbody.appendChild(row); //adding Row
+      });
+    }
+
+    initializeUI() {
+      this.updateMoviesTable();
+
+      const form = document.getElementById("movie-form");
+      form.addEventListener("submit", (e) => this.handleFormSubmit(e));
+    }
+
+    handleFormSubmit(e) {
+      e.preventDefault();
+
+      const id = document.getElementById("movie-id").value;
+      const title = document.getElementById("movie-title").value.trim();
+      const dates = [
+        document.getElementById("movie-date-1").value,
+        document.getElementById("movie-date-2").value,
+        document.getElementById("movie-date-3").value,
+      ];
+      const times = [
+        document.getElementById("movie-time-1").value,
+        document.getElementById("movie-time-2").value,
+      ];
+
+      const dhaSeats = parseInt(document.getElementById("dha-seats").value, 10);
+      const askariSeats = parseInt(
+        document.getElementById("askari-seats").value,
+        10
+      );
+
+      if (isNaN(dhaSeats) || dhaSeats <= 0) {
+        alert("Please enter a valid number of seats for DHA Branch.");
+        return;
+      }
+      if (isNaN(askariSeats) || askariSeats <= 0) {
+        alert("Please enter a valid number of seats for Askari-IV Branch.");
+        return;
+      }
+
+      const branches = {
+        "DHA Branch": dhaSeats,
+        "Askari-IV Branch": askariSeats,
+      };
+
+      const movie = new Movie(
+        id ? parseInt(id, 10) : undefined,
+        title,
+        dates,
+        times,
+        branches
+      );
+
+      this.saveMovie(movie);
+
+      // Reset the form after saving
+      e.target.reset();
+      document.getElementById("movie-id").value = ""; // Clear hidden movie ID
+    }
+  }
+
+  const movieManager = new MovieManager();
+  </script>
+</body>
+</html>

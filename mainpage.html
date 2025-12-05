@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CINEMA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Montserrat", sans-serif;
+            background-color: black;
+            color: white;
+        }
+
+        .navbar {
+            display: flex;
+            height: 150px;
+            width: 100%;
+            background: linear-gradient(to bottom, black, transparent);
+            position: fixed;
+            z-index: 99;
+        }
+
+        .nav {
+            display: flex;
+            height: 70px;
+            margin-top: 40px;
+            /* color: black; */
+        }
+
+        .navitem {
+            height: 55px;
+            width: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .sliderimgs {
+            width: 100%;
+            object-fit: cover;
+            position: relative;
+            z-index: 10;
+        }
+
+        #slider {
+            position: relative;
+            width: 100%;
+            max-width: 100%;
+            overflow: hidden;
+        }
+
+        /* Slider wrapper for images */
+        .slider-wrapper {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        a {
+            text-decoration: none;
+            color: white;
+            font-size: 1.2rem;
+            transition: all ease-in-out 0.2s;
+            /* font-weight: 700; */
+        }
+
+        a:hover {
+            color: red;
+        }
+
+        svg {
+            transition: all ease-in-out 0.2s;
+        }
+
+        svg:hover {
+            color: red;
+        }
+
+        .navbtn {
+            height: 45px;
+            width: 165px;
+            border-radius: 50px;
+            color: white;
+            border: 3px solid rgb(100, 0, 0);
+            font-size: 1.1rem;
+            margin-left: 60px;
+            background: linear-gradient(to left bottom, red, rgb(84, 8, 8));
+            transition: all ease-in-out 0.3s;
+        }
+
+        .navbtn:hover {
+            font-size: 1rem;
+            background: linear-gradient(to left bottom, rgb(84, 8, 8), red);
+            cursor: pointer;
+        }
+
+        .logo {
+            height: 130px;
+            width: 160px;
+            margin-left: 135px;
+            margin-top: 10px;
+            transition: all ease-in-out 0.4s;
+        }
+
+        .logo:hover {
+            filter: drop-shadow(0px 7px 20px red);
+            cursor: pointer;
+        }
+
+        .showingsec {
+            margin-top: 100px;
+            position: relative;
+            z-index: 11;
+        }
+
+        .showinghead {
+            font-size: 2.8rem;
+            margin: 0;
+            font-weight: 900;
+            text-shadow:
+                0 0 10px red,
+                0 0 20px red,
+                0 0 40px red,
+                0 0 80px red;
+        }
+
+        .showheadline {
+            bottom: 0;
+            width: 100%;
+            height: 4px;
+            background-color: red;
+        }
+
+        .showingimgcont {
+            margin-top: 70px;
+            display: flex;
+            justify-content: space-evenly;
+        }
+
+        .showheadcont {
+            width: 500px;
+            margin: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .cards {
+            height: 450px;
+            width: 320px;
+            border-radius: 10px;
+            z-index: 10;
+            transition: all 0.8s ease-in-out;
+        }
+
+        .cards:hover {
+            background-color: #95C11E;
+        }
+
+        #card2 {
+            background: url('moana-2.jpeg')no-repeat center center / cover;
+        }
+
+        #card1 {
+            background: url('venom-the-last-dance.jpg')no-repeat center center / cover;
+        }
+
+        #card3 {
+            background: url('gladiator-ii.jpg')no-repeat center center / cover;
+        }
+
+        #card4 {
+            background: url('wicked.jpg')no-repeat center center / cover;
+        }
+
+        .overlay {
+            height: 82.3%;
+            width: 96%;
+            background-color: #2d2d2de6;
+            color: white;
+            padding-top: 80px;
+            padding-right: 7px;
+            padding-left: 7px;
+            opacity: 0;
+            z-index: 10;
+            border-radius: 10px;
+            transition: all 0.7s ease-in-out;
+            text-align: center;
+        }
+
+        .overlay h4 {
+            font-size: 1.4rem;
+            font-weight: 900;
+        }
+
+        .overlay p {
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .cards:hover {
+            /* opacity: 1; */
+            transform: rotate3d(-1, 1, 0.1, 20deg);
+            cursor: pointer;
+        }
+
+        .cards:hover .overlay {
+            opacity: 1;
+        }
+
+        #cursor {
+            height: 15px;
+            width: 15px;
+            background-color: red;
+            border-radius: 50%;
+            position: fixed;
+            z-index: 99;
+            transition: all linear 0.13s;
+        }
+
+        #cursor-blur {
+            height: 400px;
+            width: 400px;
+            background-color: #cf1e1e57;
+            border-radius: 50%;
+            position: fixed;
+            filter: blur(70px);
+            z-index: 9;
+            transition: all linear 0.4s;
+        }
+
+        body::-webkit-scrollbar {
+            background-color: rgb(46, 0, 0);
+            display: block;
+            width: 10px;
+        }
+
+        body::-webkit-scrollbar-thumb {
+            border-radius: 50px;
+            background: linear-gradient(red, rgb(84, 8, 8));
+        }
+
+        *::selection {
+            color: red;
+            background-color: white;
+        }
+
+        .d2 {
+            background-color: red;
+            border-radius: 5px;
+            padding: 2px 3px;
+            width: 120px;
+            margin: auto;
+        }
+
+        #foodsec {
+            margin-top: 100px;
+            position: relative;
+            z-index: 11;
+        }
+
+        .foodimgcont {
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            margin-top: 70px;
+        }
+
+        .foodimg {
+            height: 400px;
+            width: 550px;
+            object-fit: cover;
+            object-position: center center;
+            border-radius: 10px;
+        }
+
+        .menucont {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            row-gap: 0.5rem;
+            padding: 40px;
+            margin-left: 80px;
+        }
+
+        .itemcont {
+            display: flex;
+        }
+
+        .menuhead {
+            color: red;
+            font-weight: 900;
+            font-size: 2.5rem;
+            margin-top: 40px;
+            margin-left: 700px;
+        }
+
+        #aboutsec {
+            position: relative;
+            z-index: 11;
+            margin-top: 80px;
+        }
+
+        .aboutpic {
+            position: absolute;
+            border: 3px solid black;
+            box-shadow: 2px 2px 10px red, -2px -2px 10px red, -2px -2px 10px red, -2px -2px 10px red;
+        }
+
+        #pic1 {
+            top: 110px;
+            left: 55px;
+            border-radius: 10px;
+            height: 330px;
+            width: 400px;
+        }
+
+        #pic2 {
+            top: 165px;
+            left: 400px;
+            border-radius: 10px;
+            height: 260px;
+            width: 330px;
+        }
+
+        #pic3 {
+            top: 370px;
+            left: 280px;
+            border-radius: 10px;
+            height: 220px;
+            width: 290px;
+        }
+
+        .aboutcontent {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .abouttxt {
+            width: 40vw;
+            margin-right: -710px;
+            margin-top: 130px;
+            font-size: 1.15rem;
+            line-height: 30px;
+        }
+
+        #eventsec {
+            margin-top: 115px;
+            position: relative;
+            z-index: 11;
+        }
+
+        #eventsec .cards {
+            height: 350px;
+            border: 3px solid red;
+        }
+
+        #eventsec .cards:hover {
+            cursor: auto;
+        }
+
+        #eventsec .overlay {
+            height: 77.3%;
+        }
+
+        .overlay h4 {
+            color: red;
+        }
+
+        #ecard1 {
+            background: url('chand raat arena.jpg')no-repeat center center / cover;
+        }
+
+        #ecard2 {
+            background: url('02.jpg')no-repeat center center / cover;
+        }
+
+        #ecard3 {
+            background: url('WhatsApp Image 2024-09-23 at 10.49.38 (1).jpeg')no-repeat center center / cover;
+        }
+
+        #ecard4 {
+            background: url('lion event.jpg')no-repeat center center / cover;
+        }
+
+        #ecard5 {
+            background: url('11.jpg')no-repeat center center / cover;
+        }
+
+        #ecard6 {
+            background: url('DSC_0364.jpg')no-repeat center center / cover;
+        }
+
+        #ecard7 {
+            background: url('Rangreza 4.jpg')no-repeat center center / cover;
+        }
+
+        #ecard8 {
+            background: url('spring.jpg')no-repeat center center / cover;
+        }
+
+        .lastsec {
+            margin-top: 100px;
+            background: linear-gradient(to left bottom, rgb(84, 8, 8), rgb(241, 45, 45));
+            width: 100%;
+            height: 350px;
+            position: relative;
+            z-index: 11;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .bookingsec {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 100px;
+            margin-top: 30px;
+        }
+
+        .bookingsec1 .logo:hover {
+            filter: drop-shadow(0px 7px 20px black);
+            cursor: pointer;
+        }
+
+        .lastone {
+            position: relative;
+            z-index: 11;
+            display: flex;
+            margin-top: 10px;
+            gap: 360px;
+        }
+
+        .lastline {
+            margin-top: 22px;
+        }
+
+        .bookingsec1,
+        .bookingsec2 {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .bookingsec1 .logo {
+            margin: 0;
+        }
+
+        .lasttxt {
+            font-size: 1.15rem;
+            width: 352px;
+        }
+
+        .lasthead {
+            font-size: 2.3rem;
+            font-weight: 900;
+            margin: 0;
+        }
+
+        .bookingsec1 a {
+            font-weight: 900;
+            font-size: 1.5rem;
+        }
+
+        .bookingsec1 a:hover {
+            color: black;
+        }
+
+        .bookingsec3 {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .cont3,
+        .cont4 {
+            display: flex;
+            margin-top: 10px;
+        }
+
+        .name {
+            margin-top: 5px;
+            margin-left: 15px;
+        }
+        button{
+            font-family: "Montserrat", sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="navbar">
+        <img onclick="location.href='#slider'" class="logo ancr" src="logo-dark.png" alt="">
+        <div class="nav">
+            <div class="navitem"><a class="ancr" href="#slider"><svg xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24" width="38" height="38" color="#ffffff" fill="none">
+                        <path
+                            d="M7.08848 4.76364L6.08847 5.54453C4.57182 6.72887 3.81348 7.32105 3.40674 8.15601C3 8.99097 3 9.95552 3 11.8846V13.9767C3 17.763 3 19.6562 4.17157 20.8325C5.11466 21.7793 6.52043 21.964 9 22V18.0057C9 17.0738 9 16.6078 9.15224 16.2403C9.35523 15.7502 9.74458 15.3609 10.2346 15.1579C10.6022 15.0057 11.0681 15.0057 12 15.0057C12.9319 15.0057 13.3978 15.0057 13.7654 15.1579C14.2554 15.3609 14.6448 15.7502 14.8478 16.2403C15 16.6078 15 17.0738 15 18.0057V22C17.4796 21.964 18.8853 21.7793 19.8284 20.8325C21 19.6562 21 17.763 21 13.9767V11.8846C21 9.95552 21 8.99097 20.5933 8.15601C20.1865 7.32105 19.4282 6.72887 17.9115 5.54453L16.9115 4.76364C14.5521 2.92121 13.3724 2 12 2C10.6276 2 9.44787 2.92121 7.08848 4.76364Z"
+                            stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+                    </svg></a></div>
+            <div class="navitem"><a class="ancr" href="#foodsec">FOOD & DRINKS</a></div>
+            <div class="navitem"><a class="ancr" href="#aboutsec">ABOUT US</a></div>
+            <div id="2ndlastnav" class="navitem"><a class="ancr" href="#eventsec">EVENTS</a></div>
+            <button onclick="location.href='userinfo.html'" class="navbtn ancr">BOOK NOW</button>
+        </div>
+    </div>
+    <div id="cursor"></div>
+    <div id="cursor-blur"></div>
+    <div id="slider">
+        <div class="slider-wrapper">
+            <img src="moana-2.png" alt="" class="sliderimgs">
+            <img src="kraven-hunter.png" alt="" class="sliderimgs">
+            <img src="sonic-3.png" alt="" class="sliderimgs">
+            <img src="mufasa.jpeg" alt="" class="sliderimgs">
+        </div>
+    </div>
+    <div class="showingsec">
+        <div class="showheadcont">
+            <h1 class="showinghead">NOW SHOWING</h1>
+            <div class="showheadline"></div>
+        </div>
+        <div class="showingimgcont">
+            <div onclick="location.href='userinfo.html'" class="cards ancr" id="card1">
+                <div class="overlay">
+                    <h4>VENOM:THE LAST DANCE</h4>
+                    <p> Eddie Brock (Tom Hardy) and Venom are on the run and hunted by both of their worlds. They are
+                        forced to make a devastating decision that will end their last dance. </p>
+                    <div class="d2">DIGITAL 2D</div>
+                    <div class="detail">Action/Adventure/Sci-fi</div>
+                </div>
+            </div>
+            <div onclick="location.href='userinfo.html'" class="cards ancr" id="card2">
+                <div class="overlay">
+                    <h4>MOANA 2</h4>
+                    <p>After receiving an unexpected call from her wayfinding ancestors, Moana journeys to the far seas
+                        of Oceania and into dangerous, long.</p>
+                    <div class="d2">DIGITAL 2D</div>
+                    <div class="detail">Family/Adventure/Comedy</div>
+                </div>
+            </div>
+            <div onclick="location.href='userinfo.html'" class="cards ancr" id="card3">
+                <div class="overlay">
+                    <h4>GLADIATOR 2</h4>
+                    <p>After his home is conquered by the tyrannical emperors who now lead Rome, Lucius is forced to
+                        enter the Colosseum and must look to h</p>
+                    <div class="d2">DIGITAL 2D</div>
+                    <div class="detail">Action/Adventure/Drama</div>
+                </div>
+            </div>
+            <div onclick="location.href='userinfo.html'" class="cards ancr" id="card4">
+                <div class="overlay">
+                    <h4>WICKED</h4>
+                    <p>After two decades as one of the most beloved and enduring musicals on the stage, Wicked makes its
+                        long-awaited journey to the big sc</p>
+                    <div class="d2">DIGITAL 3D</div>
+                    <div class="detail">Fantasy/Musical/Romance</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="foodsec">
+        <div class="showheadcont">
+            <h1 class="showinghead">FOOD & DRINKS</h1>
+            <div class="showheadline"></div>
+        </div>
+        <div class="foodimgcont">
+            <img src="Food-n-Drinks-3.jpg" alt="" class="foodimg">
+            <img src="Food-n-Drinks-2.jpg" alt="" class="foodimg">
+        </div>
+        <div class="menuhead">MENU</div>
+        <div class="menucont">
+            <div class="itemcont">
+                <div class="item">Popcorn Salted only in </div>
+                <span style="color: red;font-weight:800;" class="price">&ensp;RS.449 /-</span>
+            </div>
+            <div class="itemcont">
+                <div class="item">Popcorn Caramel only in </div>
+                <span style="color: red;font-weight:800;" class="price">&ensp;RS.519 /-</span>
+            </div>
+            <div class="itemcont">
+                <div class="item">French Fries only in </div>
+                <span style="color: red;font-weight:800;" class="price">&ensp;RS.469 /-</span>
+            </div>
+            <div class="itemcont">
+                <div class="item">Coke only in </div>
+                <span style="color: red;font-weight:800;" class="price">&ensp;RS.219 /-</span>
+            </div>
+            <div class="itemcont">
+                <div class="item">Fanta only in </div>
+                <span style="color: red;font-weight:800;" class="price">&ensp;RS.219 /-</span>
+            </div>
+            <div class="itemcont">
+                <div class="item">Sprite only in </div>
+                <span style="color: red;font-weight:800;" class="price">&ensp;RS.219 /-</span>
+            </div>
+            <div class="itemcont">
+                <div class="item">Diet Cola only in </div>
+                <span style="color: red;font-weight:800;" class="price">&ensp;RS.219 /-</span>
+            </div>
+            <div class="itemcont">
+                <div class="item">Instant Peach only in </div>
+                <span style="color: red;font-weight:800;" class="price">&ensp;RS.269 /-</span>
+            </div>
+            <div class="itemcont">
+                <div class="item">Instant Lemon only in </div>
+                <span style="color: red;font-weight:800;" class="price">&ensp;RS.269 /-</span>
+            </div>
+            <div class="itemcont">
+                <div class="item">Instant Mango only in </div>
+                <span style="color: red;font-weight:800;" class="price">&ensp;RS.269 /-</span>
+            </div>
+            <div class="itemcont">
+                <div class="item">Plain Tea only in </div>
+                <span style="color: red;font-weight:800;" class="price">&ensp;RS.199 /-</span>
+            </div>
+            <div class="itemcont">
+                <div class="item">Cardamom Tea only in </div>
+                <span style="color: red;font-weight:800;" class="price">&ensp;RS.219 /-</span>
+            </div>
+            <div class="itemcont">
+                <div class="item">Hot Chocolate Mix only in </div>
+                <span style="color: red;font-weight:800;" class="price">&ensp;RS.349 /-</span>
+            </div>
+            <div class="itemcont">
+                <div class="item">Nachos only in </div>
+                <span style="color: red;font-weight:800;" class="price">&ensp;RS.1469 /-</span>
+            </div>
+            <div class="itemcont">
+                <div class="item">Chocolate Brownie only in </div>
+                <span style="color: red;font-weight:800;" class="price">&ensp;RS.449 /-</span>
+            </div>
+            <div class="itemcont">
+                <div class="item">Mineral Water only in </div>
+                <span style="color: red;font-weight:800;" class="price">&ensp;RS.59 /-</span>
+            </div>
+            <div class="itemcont">
+                <div class="item">Big Apple only in </div>
+                <span style="color: red;font-weight:800;" class="price">&ensp;RS.149 /-</span>
+            </div>
+            <div class="itemcont">
+                <div class="item">Lemon Malt only in </div>
+                <span style="color: red;font-weight:800;" class="price">&ensp;RS.119 /-</span>
+            </div>
+            <div class="itemcont">
+                <div class="item">Peach Malt only in </div>
+                <span style="color: red;font-weight:800;" class="price">&ensp;RS.159 /-</span>
+            </div>
+            <div class="itemcont">
+                <div class="item">Red Bull only in </div>
+                <span style="color: red;font-weight:800;" class="price">&ensp;RS.549 /-</span>
+            </div>
+            <div class="itemcont">
+                <div class="item">Pringle(Small) only in </div>
+                <span style="color: red;font-weight:800;" class="price">&ensp;RS.899 /-</span>
+            </div>
+            <div class="itemcont">
+                <div class="item">Pringle(Large) only in </div>
+                <span style="color: red;font-weight:800;" class="price">&ensp;RS.1399 /-</span>
+            </div>
+            <div class="itemcont">
+                <div class="item">Peanuts only in </div>
+                <span style="color: red;font-weight:800;" class="price">&ensp;RS.179 /-</span>
+            </div>
+            <div class="itemcont">
+                <div class="item">Nimko only in </div>
+                <span style="color: red;font-weight:800;" class="price">&ensp;RS.249 /-</span>
+            </div>
+        </div>
+    </div>
+    <div id="aboutsec">
+        <div class="showheadcont">
+            <h1 class="showinghead">ABOUT US</h1>
+            <div class="showheadline"></div>
+        </div>
+        <div class="aboutcontent">
+            <div class="aboutpicscont">
+                <img src="arena-isb.jpg" alt="" class="aboutpic" id="pic1">
+                <img src="arena-lhr.jpg" alt="" class="aboutpic" id="pic2">
+                <img src="arena-khi.jpg" alt="" class="aboutpic" id="pic3">
+            </div>
+            <p class="abouttxt">The Arena prides itself on being a multi-city state-of-the-art 3-Dcinema, the first of
+                its kind, guaranteeing a complete movie experience from the vintage architectural expression of the
+                Roman Colosseum to the enchanting ambiance within.The Arena cinemas are equipped with Barco DP4K
+                projector, the brightest projector in the world, silver screen and 7.1 channel digital QSC sound. The
+                premiere hall has a theater-like-feel housing more than 200 seats along with VIP boxes having 6 Lay-Z
+                boy recliners each.Our concession area contains a variety of delicious items to choose from. From the
+                traditional popcorn and nachos deals to various hot and cold beverages, we have it all. Now enjoy the
+                greatest food, drink and movie, all in one place.</p>
+        </div>
+    </div>
+    <div id="eventsec">
+        <div class="showheadcont">
+            <h1 class="showinghead">EVENTS GALLERY</h1>
+            <div class="showheadline"></div>
+        </div>
+        <div class="showingimgcont">
+            <div class="cards" id="ecard1">
+                <div class="overlay">
+                    <h4>Chand Raat Bazaar</h4>
+                </div>
+            </div>
+            <div class="cards" id="ecard2">
+                <div class="overlay">
+                    <h4>New Years Eve Celebrations</h4>
+                </div>
+            </div>
+            <div class="cards" id="ecard3">
+                <div class="overlay">
+                    <h4>KAN NAGAR</h4>
+                </div>
+            </div>
+            <div class="cards" id="ecard4">
+                <div class="overlay">
+                    <h4>Lion King Red Carpet Premiere</h4>
+                </div>
+            </div>
+        </div>
+        <div class="showingimgcont">
+            <div class="cards" id="ecard5">
+                <div class="overlay">
+                    <h4>The Arena 7th Anniversary</h4>
+                </div>
+            </div>
+            <div class="cards" id="ecard6">
+                <div class="overlay">
+                    <h4>Parchi Meet and Greet</h4>
+                </div>
+            </div>
+            <div class="cards" id="ecard7">
+                <div class="overlay">
+                    <h4>Rangreza Meet and Greet</h4>
+                </div>
+            </div>
+            <div class="cards" id="ecard8">
+                <div class="overlay">
+                    <h4>Spring Festival 2018</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="lastsec">
+        <div class="bookingsec">
+            <div class="bookingsec1">
+                <img onclick="location.href='#slider'" class="logo ancr" src="logo-dark.png" alt="">
+                <a href="#foodsec" class="ancr">FOOD & DRINKS</a>
+                <a href="#aboutsec" class="ancr">ABOUT US</a>
+                <a href="#eventsec" class="ancr">EVENTS</a>
+            </div>
+            <div class="bookingsec3">
+                <h1 class="lasthead">Get in Touch</h1>
+                <p class="lasttxt">You are always welcome to contact us.</p>
+                <div class="cont3">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="30" height="30" color="#ffffff"
+                        fill="#000000">
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M6.18182 10.3333C5.20406 10.3333 5 10.5252 5 11.4444V13.1111C5 14.0304 5.20406 14.2222 6.18182 14.2222H8.54545V20.8889C8.54545 21.8081 8.74951 22 9.72727 22H12.0909C13.0687 22 13.2727 21.8081 13.2727 20.8889V14.2222H15.9267C16.6683 14.2222 16.8594 14.0867 17.0631 13.4164L17.5696 11.7497C17.9185 10.6014 17.7035 10.3333 16.4332 10.3333H13.2727V7.55556C13.2727 6.94191 13.8018 6.44444 14.4545 6.44444H17.8182C18.7959 6.44444 19 6.25259 19 5.33333V3.11111C19 2.19185 18.7959 2 17.8182 2H14.4545C11.191 2 8.54545 4.48731 8.54545 7.55556V10.3333H6.18182Z"
+                            stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+                    </svg>
+                    <div class="name">Facebook</div>
+                </div>
+                <div class="cont4">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="30" height="30" color="#ffffff"
+                        fill="#000000">
+                        <path
+                            d="M2.5 12C2.5 7.52166 2.5 5.28249 3.89124 3.89124C5.28249 2.5 7.52166 2.5 12 2.5C16.4783 2.5 18.7175 2.5 20.1088 3.89124C21.5 5.28249 21.5 7.52166 21.5 12C21.5 16.4783 21.5 18.7175 20.1088 20.1088C18.7175 21.5 16.4783 21.5 12 21.5C7.52166 21.5 5.28249 21.5 3.89124 20.1088C2.5 18.7175 2.5 16.4783 2.5 12Z"
+                            stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+                        <path
+                            d="M16.5 12C16.5 14.4853 14.4853 16.5 12 16.5C9.51472 16.5 7.5 14.4853 7.5 12C7.5 9.51472 9.51472 7.5 12 7.5C14.4853 7.5 16.5 9.51472 16.5 12Z"
+                            stroke="currentColor" stroke-width="1.5" />
+                        <path d="M17.5078 6.5L17.4988 6.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                    <div class="name">Instagram</div>
+                </div>
+            </div>
+            <div class="bookingsec2">
+                <h1 class="lasthead">Delivery Booking</h1>
+                <p class="lasttxt">Book now to get Show-times & tickets on the go !</p>
+                <button onclick="location.href='userinfo.html'" class="navbtn ancr">BOOK NOW</button>
+            </div>
+        </div>
+        <div class="lastone">
+            <div class="lastline">Copyright © 2023 Adventure Leisure Ltd. All rights reserved. | Privacy Policy | Terms
+                And Conditions | Gender Pay Gap</div>
+            <button onclick="location.href='adminlogin.html'" class="navbtn ancr">Login as Admin</button>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"
+        integrity="sha512-7eHRwcbYkK4d9g/6tD/mhkf++eoTHwpNM9woBxtPUBWm67zeAfFC+HrdoE2GanKeocly/VxeLvIqwvCdk7qScg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"
+        integrity="sha512-onMTRKJBKz8M1TnqqDuGBlowlH0ohFzMXYRNebz+yOcc5TQr/zAKsthzhuv0hiyUKEiQEQXEynnXCvNTOk50dg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        var crsr = document.querySelector("#cursor");
+        var crsrblr = document.querySelector("#cursor-blur");
+        document.addEventListener("mousemove", (dets) => {
+            crsr.style.left = dets.x + 3 + "px";
+            crsr.style.top = dets.y + 7 + "px";
+            crsrblr.style.left = dets.x - 200 + "px";
+            crsrblr.style.top = dets.y - 200 + "px";
+        })
+        gsap.to(".navbar", {
+            backgroundColor: "black",
+            duration: 0.5,
+            height: "20.4%",
+            scrollTrigger: {
+                trigger: ".navbar",
+                scroller: "body",
+                start: "top -10%",
+                end: "top -11%",
+                scrub: 1
+            }
+        });
+        let currentSlide = 0;
+        const slides = document.querySelectorAll(".sliderimgs");
+        const totalSlides = slides.length;
+
+        function updateSlider() {
+            const sliderWrapper = document.querySelector(".slider-wrapper");
+            sliderWrapper.style.transform = `translateX(-${currentSlide * 100}%)`;
+        }
+        function autoSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            updateSlider();
+        }
+        setInterval(autoSlide, 3000);
+    </script>
+</body>
+</html>
